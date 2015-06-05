@@ -2,6 +2,7 @@ package gogitlab
 
 import (
 	"encoding/json"
+	"log"
 	"net/url"
 	"time"
 )
@@ -217,15 +218,29 @@ func (g *Gitlab) RepoRawFile(id, sha, filepath string) ([]byte, error) {
 	return contents, err
 }
 
+/*
+Get Raw file content
+*/
 func (g *Gitlab) RepoTree(id, ref, path string) ([]*File, error) {
 
-	url, opaque := g.ResourceUrlRaw(repo_url_tree, map[string]string{":id": id, ":ref": ref, ":path": path})
+	url := g.ResourceUrlQuery(repo_url_tree, map[string]string{
+		":id": id,
+	}, map[string]string{
+		"ref":  ref,
+		"path": path,
+	})
 
 	var files []*File
 
-	contents, err := g.buildAndExecRequestRaw("GET", url, opaque, nil)
+	contents, err := g.buildAndExecRequest("GET", url, nil)
 	if err == nil {
 		err = json.Unmarshal(contents, &files)
+	}
+
+	for _, f := range files {
+		if f.Type == "tree" {
+			f.Children, err = g.RepoTree(id, ref, path+"/"+f.Name)
+		}
 	}
 
 	return files, err
