@@ -2,7 +2,6 @@ package gogitlab
 
 import (
 	"encoding/json"
-	"log"
 	"net/url"
 	"time"
 )
