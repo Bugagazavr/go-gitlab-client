@@ -53,6 +53,15 @@ type Commit struct {
 	CreatedAt    time.Time
 }
 
+type File struct {
+	Id   string `json:"id,omitempty"`
+	Name string `json:"name,omitempty"`
+	Type string `json:"type,omitempty"`
+	Mode string `json:"mode,omitempty"`
+
+	Children []*File
+}
+
 /*
 Get a list of repository branches from a project, sorted by name alphabetically.
 
@@ -206,4 +215,32 @@ func (g *Gitlab) RepoRawFile(id, sha, filepath string) ([]byte, error) {
 	contents, err := g.buildAndExecRequestRaw("GET", url_, opaque, nil)
 
 	return contents, err
+}
+
+/*
+Get Raw file content
+*/
+func (g *Gitlab) RepoTree(id, ref, path string) ([]*File, error) {
+
+	url := g.ResourceUrlQuery(repo_url_tree, map[string]string{
+		":id": id,
+	}, map[string]string{
+		"ref":  ref,
+		"path": path,
+	})
+
+	var files []*File
+
+	contents, err := g.buildAndExecRequest("GET", url, nil)
+	if err == nil {
+		err = json.Unmarshal(contents, &files)
+	}
+
+	for _, f := range files {
+		if f.Type == "tree" {
+			f.Children, err = g.RepoTree(id, ref, path+"/"+f.Name)
+		}
+	}
+
+	return files, err
 }
