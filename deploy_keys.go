@@ -77,10 +77,9 @@ Parameters:
 
 */
 func (g *Gitlab) AddProjectDeployKey(id, title, key string) error {
+	var err error
 
 	path, opaque := g.ResourceUrlRaw(project_url_deploy_keys, map[string]string{":id": id})
-
-	var err error
 
 	v := url.Values{}
 	v.Set("title", title)
