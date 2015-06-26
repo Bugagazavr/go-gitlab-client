@@ -3,6 +3,7 @@ package gogitlab
 import (
 	"encoding/json"
 	"strconv"
+	"strings"
 )
 
 const (
@@ -222,7 +223,7 @@ Parameters:
 func (g *Gitlab) SearchProjectId(namespace string, name string) (id int, err error) {
 
 	url, opaque := g.ResourceUrlRaw(projects_search_url, map[string]string{
-		":query": name,
+		":query": strings.ToLower(name),
 	})
 
 	var projects []*Project
