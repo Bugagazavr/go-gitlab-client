@@ -60,6 +60,8 @@ func (g *Gitlab) SearchProjectId(namespace string, name string) (id int, err err
 	contents, err := g.buildAndExecRequestRaw("GET", url, opaque, nil)
 	if err == nil {
 		err = json.Unmarshal(contents, &projects)
+	} else {
+		return id, err
 	}
 
 	for _, project := range projects {
