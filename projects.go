@@ -221,7 +221,7 @@ Parameters:
 */
 func (g *Gitlab) SearchProjectId(namespace string, name string) (id int, err error) {
 
-	url, opaque := g.ResourceUrlRaw(project_url_search_ids, map[string]string{
+	url, opaque := g.ResourceUrlRaw(projects_search_url, map[string]string{
 		":query": name,
 	})
 

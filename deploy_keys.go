@@ -10,8 +10,6 @@ const (
 	project_url_deploy_keys = "/projects/:id/keys" // Get list of project deploy keys
 	// PROJECT ID AND KEY ID
 	project_url_deploy_key = "/projects/:id/keys/:key_id" // Get single project deploy key
-
-	project_url_search_ids = "/projects/search/:query"
 )
 
 /*
