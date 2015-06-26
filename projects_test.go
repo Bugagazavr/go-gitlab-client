@@ -63,10 +63,8 @@ func TestSearchProjectId(t *testing.T) {
 	namespace := "Brightbox"
 	name := "Puppet"
 	id, err := gitlab.SearchProjectId(namespace, name)
-	if err != nil {
-		println(err.Error())
-	}
 
+	assert.Equal(t, err, nil)
 	assert.Equal(t, id, 6)
 	defer ts.Close()
 }
