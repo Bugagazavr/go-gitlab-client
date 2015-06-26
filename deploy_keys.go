@@ -10,6 +10,8 @@ const (
 	project_url_deploy_keys = "/projects/:id/keys" // Get list of project deploy keys
 	// PROJECT ID AND KEY ID
 	project_url_deploy_key = "/projects/:id/keys/:key_id" // Get single project deploy key
+
+	project_url_search_ids = "/projects/search/:query"
 )
 
 /*
@@ -34,6 +36,39 @@ func (g *Gitlab) ProjectDeployKeys(id string) ([]*PublicKey, error) {
 	}
 
 	return deployKeys, err
+}
+
+/*
+Get single project deploy key.
+
+    GET /projects/:id/keys/:key_id
+
+Parameters:
+
+    id     The ID of a project
+    key_id The ID of a key
+
+*/
+func (g *Gitlab) SearchProjectId(namespace string, name string) (id int, err error) {
+
+	url, opaque := g.ResourceUrlRaw(project_url_search_ids, map[string]string{
+		":query": name,
+	})
+
+	var projects []*Project
+
+	contents, err := g.buildAndExecRequestRaw("GET", url, opaque, nil)
+	if err == nil {
+		err = json.Unmarshal(contents, &projects)
+	}
+
+	for _, project := range projects {
+		if project.Namespace.Name == namespace {
+			id = project.Id
+		}
+	}
+
+	return id, err
 }
 
 /*
@@ -77,10 +112,9 @@ Parameters:
 
 */
 func (g *Gitlab) AddProjectDeployKey(id, title, key string) error {
+	var err error
 
 	path, opaque := g.ResourceUrlRaw(project_url_deploy_keys, map[string]string{":id": id})
-
-	var err error
 
 	v := url.Values{}
 	v.Set("title", title)
