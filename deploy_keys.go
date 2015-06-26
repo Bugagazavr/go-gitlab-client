@@ -49,41 +49,6 @@ Parameters:
     key_id The ID of a key
 
 */
-func (g *Gitlab) SearchProjectId(namespace string, name string) (id int, err error) {
-
-	url, opaque := g.ResourceUrlRaw(project_url_search_ids, map[string]string{
-		":query": name,
-	})
-
-	var projects []*Project
-
-	contents, err := g.buildAndExecRequestRaw("GET", url, opaque, nil)
-	if err == nil {
-		err = json.Unmarshal(contents, &projects)
-	} else {
-		return id, err
-	}
-
-	for _, project := range projects {
-		if project.Namespace.Name == namespace {
-			id = project.Id
-		}
-	}
-
-	return id, err
-}
-
-/*
-Get single project deploy key.
-
-    GET /projects/:id/keys/:key_id
-
-Parameters:
-
-    id     The ID of a project
-    key_id The ID of a key
-
-*/
 func (g *Gitlab) ProjectDeployKey(id, key_id string) (*PublicKey, error) {
 
 	url, opaque := g.ResourceUrlRaw(project_url_deploy_key, map[string]string{
