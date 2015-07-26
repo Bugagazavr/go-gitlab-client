@@ -41,10 +41,13 @@ type hProject struct {
 }
 
 type hRepository struct {
-	Name        string `json:"name,omitempty"`
-	URL         string `json:"url,omitempty"`
-	Description string `json:"description,omitempty"`
-	Homepage    string `json:"homepage,omitempty"`
+	Name            string `json:"name,omitempty"`
+	URL             string `json:"url,omitempty"`
+	Description     string `json:"description,omitempty"`
+	Homepage        string `json:"homepage,omitempty"`
+	GitHttpUrl      string `json:"git_http_url,omitempty"`
+	GitSshUrl       string `json:"git_ssh_url,omitempty"`
+	VisibilityLevel int    `json:"visibility_level,omitempty"`
 }
 
 type hCommit struct {
@@ -79,18 +82,18 @@ func ParseHook(payload []byte) (*HookPayload, error) {
 	// Basic sanity check
 	switch {
 	case len(hp.ObjectKind) == 0:
-        // Assume this is a post-receive within repository
+		// Assume this is a post-receive within repository
 		if len(hp.After) == 0 {
 			return nil, fmt.Errorf("Invalid hook received, commit hash not found.")
 		}
-    case hp.ObjectKind == "push":
-        if hp.Repository == nil {
-            return nil, fmt.Errorf("Invalid push hook received, attributes not found")
-        }
-    case hp.ObjectKind == "tag_push":
-        if hp.Repository == nil {
-            return nil, fmt.Errorf("Invalid tag push hook received, attributes not found")
-        }
+	case hp.ObjectKind == "push":
+		if hp.Repository == nil {
+			return nil, fmt.Errorf("Invalid push hook received, attributes not found")
+		}
+	case hp.ObjectKind == "tag_push":
+		if hp.Repository == nil {
+			return nil, fmt.Errorf("Invalid tag push hook received, attributes not found")
+		}
 	case hp.ObjectKind == "issue":
 		fallthrough
 	case hp.ObjectKind == "merge_request":
