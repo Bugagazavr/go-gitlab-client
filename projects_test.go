@@ -56,3 +56,15 @@ func TestProjectMergeRequests(t *testing.T) {
 		assert.Equal(t, mr[0].SourceBranch, "test1")
 	}
 }
+
+func TestSearchProjectId(t *testing.T) {
+	ts, gitlab := Stub("stubs/projects/index.json")
+
+	namespace := "Brightbox"
+	name := "Puppet"
+	id, err := gitlab.SearchProjectId(namespace, name)
+
+	assert.Equal(t, err, nil)
+	assert.Equal(t, id, 6)
+	defer ts.Close()
+}

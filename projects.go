@@ -3,6 +3,7 @@ package gogitlab
 import (
 	"encoding/json"
 	"strconv"
+	"strings"
 )
 
 const (
@@ -206,4 +207,39 @@ func (g *Gitlab) ProjectMergeRequests(id string, page int, per_page int, state s
 	}
 
 	return mr, err
+}
+
+/*
+Get single project id.
+
+    GET /projects/search/:query
+
+Parameters:
+
+    namespace The namespace of a project
+    name      The id of a project
+
+*/
+func (g *Gitlab) SearchProjectId(namespace string, name string) (id int, err error) {
+
+	url, opaque := g.ResourceUrlRaw(projects_search_url, map[string]string{
+		":query": strings.ToLower(name),
+	})
+
+	var projects []*Project
+
+	contents, err := g.buildAndExecRequestRaw("GET", url, opaque, nil)
+	if err == nil {
+		err = json.Unmarshal(contents, &projects)
+	} else {
+		return id, err
+	}
+
+	for _, project := range projects {
+		if project.Namespace.Name == namespace {
+			id = project.Id
+		}
+	}
+
+	return id, err
 }
