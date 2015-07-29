@@ -236,7 +236,7 @@ func (g *Gitlab) SearchProjectId(namespace string, name string) (id int, err err
 	}
 
 	for _, project := range projects {
-		if project.Namespace.Name == namespace {
+		if project.Namespace.Name == namespace && strings.ToLower(project.Name) == strings.ToLower(name) {
 			id = project.Id
 		}
 	}
