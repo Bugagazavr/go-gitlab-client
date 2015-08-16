@@ -212,7 +212,7 @@ Get a list of comments in a repository commit.
 
 Parameters:
 
-    id  The ID of a project
+	id  The ID of a project
 	sha The sha of the commit
 
 Usage:
@@ -246,7 +246,7 @@ Create a comment in a repository commit.
 
 Parameters:
 
-    id   The ID of a project
+	id   The ID of a project
 	sha  The sha of the commit
 	body The body of the comment
 
