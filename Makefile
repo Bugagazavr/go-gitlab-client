@@ -1,8 +1,17 @@
+GOPATH=$(shell pwd)/.gobuild
+ORGDIR=$(GOPATH)/src/github.com/bugagazavr
+REPODIR=$(ORGDIR)/go-gitlab-client
+
 all:deps test
 
+clean:
+	rm -Rf $(GOPATH)
+
 deps:
-	go get github.com/stretchr/testify
-	go get ./...
+	@mkdir -p $(ORGDIR)
+	@rm -f $(REPODIR) && ln -s ../../../.. $(REPODIR)
+	GOPATH=$(GOPATH) go get github.com/stretchr/testify
+	GOPATH=$(GOPATH) go get $(REPODIR)
 
 test:
-	go test -cover -short ./...
+	GOPATH=$(GOPATH) cd $(REPODIR) && go test -short ./...

@@ -74,6 +74,7 @@ type Project struct {
 	HttpRepoUrl          string       `json:"http_url_to_repo"`
 	Url                  string       `json:"web_url"`
 	Permissions          *Permissions `json:"permissions,omitempty"`
+	Archived             bool         `json:"archived"`
 }
 
 type MergeRequest struct {
