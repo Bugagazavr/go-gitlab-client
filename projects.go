@@ -20,23 +20,26 @@ const (
 )
 
 type Member struct {
-	Id        int
-	Username  string
-	Email     string
-	Name      string
-	State     string
+	Id        int    `json:"id"`
+	Username  string `json:"username"`
+	Email     string `json:"email"`
+	Name      string `json:"name"`
+	State     string `json:"state"`
 	CreatedAt string `json:"created_at,omitempty"`
+	AvatarURL string `json:"avatar_url"`
 	// AccessLevel int
 }
 
 type Namespace struct {
-	Id          int
-	Name        string
-	Path        string
-	Description string
-	Owner_Id    int
-	Created_At  string
-	Updated_At  string
+	Id          int    `json:"id"`
+	Name        string `json:"name"`
+	Path        string `json:"path"`
+	FullPath    string `json:"full_path"`
+	Kind        string `json:"kind"`
+	Description string `json:"description"`
+	Owner_Id    int    `json:"owner_id"`
+	Created_At  string `json:"created_at"`
+	Updated_At  string `json:"updated_at"`
 }
 
 type ProjectAccess struct {
