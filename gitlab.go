@@ -77,6 +77,7 @@ func (g *Gitlab) buildAndExecRequest(method, url string, body []byte) ([]byte, e
 	if body != nil {
 		reader := bytes.NewReader(body)
 		req, err = http.NewRequest(method, url, reader)
+		req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	} else {
 		req, err = http.NewRequest(method, url, nil)
 	}
