@@ -8,14 +8,14 @@ go-gitlab-client is a simple client written in golang to consume gitlab API.
 [![Build Status](https://travis-ci.org/Bugagazavr/go-gitlab-client.svg?branch=master)](https://travis-ci.org/Bugagazavr/go-gitlab-client)
 
 
-##features
+## Features
 
 *	
-	###Session [gitlab api doc](http://doc.gitlab.com/ce/api/session.html)
+	### Session [gitlab api doc](http://doc.gitlab.com/ce/api/session.html)
 	* get session
 
 *	
-	###Projects [gitlab api doc](http://doc.gitlab.com/ce/api/projects.html)
+	### Projects [gitlab api doc](http://doc.gitlab.com/ce/api/projects.html)
 	* list projects
 	* get single project
 	* list project merge requests
@@ -23,7 +23,7 @@ go-gitlab-client is a simple client written in golang to consume gitlab API.
 	* add comments to merge requests
 
 *	
-	###Repositories [gitlab api doc](http://doc.gitlab.com/ce/api/repositories.html)
+	### Repositories [gitlab api doc](http://doc.gitlab.com/ce/api/repositories.html)
 	* list repository branches
 	* get single repository branch
 	* list project repository tags
@@ -32,19 +32,17 @@ go-gitlab-client is a simple client written in golang to consume gitlab API.
 	* add/get/edit/rm project hook
 
 *	
-	###Users [gitlab api doc](http://doc.gitlab.com/ce/api/users.html)
+	### Users [gitlab api doc](http://doc.gitlab.com/ce/api/users.html)
 	* get single user
 	* manage user keys
 
 *	
-	###Deploy Keys [gitlab api doc](http://doc.gitlab.com/ce/api/deploy_keys.html)
+	### Deploy Keys [gitlab api doc](http://doc.gitlab.com/ce/api/deploy_keys.html)
 	* list project deploy keys
 	* add/get/rm project deploy key
 
 
-
-
-##Installation
+## Installation
 
 To install go-gitlab-client, use `go get`:
 
@@ -60,15 +58,14 @@ import (
 )
 ```
 
-
-##Update
+## Update
 
 To update `go-gitlab-client`, use `go get -u`:
 
     go get -u github.com/bugagazavr/go-gitlab-client
 
 
-##Documentation
+## Documentation
 
 Visit the docs at http://godoc.org/github.com/Bugagazavr/go-gitlab-client
 
